@@ -1,0 +1,62 @@
+
+* {
+    font-family: "Public Sans", sans-serif;
+}
+
+i {
+    color: #0D141C;
+}
+
+i:hover {
+    color: #4A739C;
+}
+
+.texto-principal {
+    color: #0D141C;
+}
+
+.texto-secundario {
+    color: #4A739C;
+}
+
+/* Topo */
+
+.alerta {
+    border-left: #F6696C 7px solid;
+}
+
+.alerta button {
+    color: #0D141C;
+}
+
+.alerta button:hover{
+    color: #4A739C;
+}
+
+/* Fim */
+
+td, th {
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+  }
+
+
+/* Alterações nas classes Bootstrap */
+
+.btn-secondary {
+    background-color: #E8EDF5 !important;
+}
+
+.btn-secondary:hover {
+    background-color: #DFE9F7 !important;
+    color: #4A739C !important;
+}
+
+.nav-link {
+    color: #0D141C !important;
+}
+
+.nav-link:hover {
+    color: #4A739C !important;
+}
