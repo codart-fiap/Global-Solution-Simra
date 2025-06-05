@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const sensorSelecionado = sensorsData.find(s => s.id === sensorId);
 
                 if (sensorSelecionado && modalDetalhesSensorInstance) {
-                    if(modalDetalhesSensorLabel) modalDetalhesSensorLabel.textContent = `Detalhes do Sensor ${sensorSelecionado.id}`;
+                    if(modalDetalhesSensorLabel) modalDetalhesSensorLabel.textContent = `Detalhes do ${sensorSelecionado.id}`;
                     if(detalheSensorId) detalheSensorId.textContent = sensorSelecionado.id;
                     if(detalheSensorLocalizacao) detalheSensorLocalizacao.textContent = sensorSelecionado.localizacao;
                     if(detalheSensorTipo) detalheSensorTipo.textContent = sensorSelecionado.tipo;
