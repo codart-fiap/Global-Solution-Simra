@@ -31,13 +31,13 @@
                         <a class="nav-link"  href="#">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"  href="#">Sensores</a>
+                        <a class="nav-link"  href="pages/sensores.html">Sensores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Alertas</a>
+                        <a class="nav-link" href="pages/ocorrencia.html">Ocorrências</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Ocorrências</a>
+                        <a class="nav-link" href="pages/abrigosevoluntarios.html">Abrigos e Voluntários</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
@@ -67,19 +67,17 @@
     <h1 class="fw-bold texto-principal">Dashboard</h1>
     <h2 class="fw-bold fs-3 texto-principal mt-5 mb-4">Alertas ativos</h2>
 
-        <div class="alerta p-3 shadow rounded">
-            <div class="row">
-                <div class="col-8">
-                    <h3 class="fw-bold fs-5 text-principal">Alagamento em Morro da Paz</h3>
-                    <p class="texto-secundario">Nível de àgua aumentando rapidamente. Os moradores devem evacuar a área.</p>
-                    <button type="button" class="btn btn-secondary btn-md border-0 rounded-pill">Ver detalhes</button>
-                </div>
-
-                <div class="col-4">
-                    <img src="img/morrodapaz.svg" alt="Imagem de alagamento">
-                </div>
+        <div class="d-flex alerta p-3 shadow rounded">
+            <div>
+              <h5 class="fw-bold mb-2">Alagamento em Morro da Paz</h5>
+              <p class="texto-secundario mb-4">
+                Nível de água aumentando rapidamente. Os moradores devem evacuar a área.
+              </p>
+              <button class="btn btn-secondary btn-md border-0 rounded-pill">Ver detalhes</button>
             </div>
-        </div>
+            <img src="img/morrodapaz.svg"Alerta de alagamento"
+                 class="ms-auto rounded" style="object-fit: cover;">
+          </div>
 
         <div class="sensores">
 
@@ -113,25 +111,36 @@
                         <th scope="row">River Road</th>
                         <td class="texo-secundario">Nível de àgua</td>
                         <td>250m³/s</td>
-                        <td><span class="badge badge-custom rounded-pill bg-secondary px-4 py-2">Normal</span></td>
+                        <td><span class="badge rounded-pill bg-secondary px-4 py-2">Normal</span></td>
                     </tr>
                     <tr>
-                        <th scope="row">Park Avenue</th>
+                        <th scope="row">Lake Avenue</th>
                         <td>Densidade de chuva</td>
                         <td>15mm/hr</td>
                         <td><span class="badge rounded-pill bg-warning px-4 py-2">Atenção</span></td>
                     </tr>
                     <tr>
-                        <th scope="row">River Road</th>
+                        <th scope="row">Leaf Avenue</th>
                         <td class="texo-secundario">Nível de àgua</td>
-                        <td>250m³/s</td>
-                        <td><span class="badge badge-custom rounded-pill bg-secondary px-4 py-2">Normal</span></td>
+                        <td>1.1m</td>
+                        <td><span class="badge rounded-pill bg-secondary px-4 py-2">Normal</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Wood Road</th>
+                        <td class="texo-secundario">Nível de àgua</td>
+                        <td>1.3m</td>
+                        <td><span class="badge rounded-pill bg-secondary px-4 py-2">Normal</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">River Side</th>
+                        <td class="texo-secundario">Nível de àgua</td>
+                        <td>1m</td>
+                        <td><span class="badge rounded-pill bg-secondary px-4 py-2">Normal</span></td>
                     </tr>
                     </tbody>
                 </table>
 
             </div>
-
 
 
         </div>

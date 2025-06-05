@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocorrências - SIMRA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg border-bottom bg-white sticky-top">
+       
+        <div class="container-fluid">
+            <a class="navbar-brand ms-2" href="#"><img src="../img/logoSimra.svg" width="180" height="45" alt="Logo SIMRA"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav d-flex align-items-center gap-3 fs-5">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../pages/sensores.html">Sensores</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="../pages/ocorrencia.html">Ocorrências</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../pages/abrigosevoluntarios.html">Abrigos e Voluntários</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <button type="button" class="btn btn-secondary btn-md border-0 rounded"><i class="fa-regular fa-bell"></i></button>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <button type="button" class="btn btn-secondary btn-md border-0 rounded-circle"><i class="fa-regular fa-user"></i></button>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h2 fw-bold">Ocorrências</h1>
+            <button type="button" class="btn btn-primary" id="btnAbrirPainelOcorrencias" data-bs-toggle="offcanvas" data-bs-target="#ocorrenciasOffcanvas" aria-controls="ocorrenciasOffcanvas">
+                <i class="fas fa-cog me-1"></i> Gerenciar Ocorrências
+            </button>
+        </div>
+
+        <div class="p-3 bg-white rounded shadow-sm mb-4">
+           
+            <div class="input-group mb-3">
+                <span class="input-group-text bg-transparent border-end-0"><i class="fas fa-search"></i></span>
+                <input type="search" class="form-control border-start-0" placeholder="Pesquisar em todas as colunas..." aria-label="Search" id="searchOcorrenciasInput">
+            </div>
+
+            
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="filtroDataOcorrencia" class="form-label">Filtrar por Data:</label>
+                    <input type="date" class="form-control" id="filtroDataOcorrencia">
+                </div>
+                <div class="col-md-3">
+                    <label for="filtroTipoAssistencia" class="form-label">Tipo de Assistência:</label>
+                    <select class="form-select" id="filtroTipoAssistencia">
+                        <option selected value="">Todos os Tipos</option>
+                        
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="filtroStatusOcorrencia" class="form-label">Status:</label>
+                    <select class="form-select" id="filtroStatusOcorrencia">
+                        <option selected value="">Todos os Status</option>
+                        <option value="Pendente">Pendente</option>
+                        <option value="Em atendimento">Em atendimento</option>
+                        <option value="Concluído">Concluído</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button class="btn btn-outline-secondary w-100" type="button" id="btnLimparFiltrosOcorrencias">
+                        <i class="fas fa-times me-1"></i> Limpar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Localização</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Tipo de assistência</th>
+                        <th scope="col">Data/Hora</th>
+                        <th scope="col">Descrição</th>
+                    </tr>
+                </thead>
+                <tbody id="occurrencesTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+ 
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="ocorrenciasOffcanvas" aria-labelledby="ocorrenciasOffcanvasLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title" id="ocorrenciasOffcanvasLabel"><i class="fas fa-cogs me-2"></i>Gerenciar Ocorrências</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="d-grid gap-2">
+                <button type="button" class="btn btn-success text-start" data-bs-toggle="modal" data-bs-target="#modalNovaOcorrencia">
+                    <i class="fas fa-plus fa-fw me-2"></i>Registrar Nova Ocorrência
+                </button>
+                <button type="button" class="btn btn-outline-primary text-start" id="btnAtualizarListaOcorrencias">
+                    <i class="fas fa-sync-alt fa-fw me-2"></i>Atualizar Lista
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalNovaOcorrencia" tabindex="-1" aria-labelledby="modalNovaOcorrenciaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalNovaOcorrenciaLabel">Registrar Nova Ocorrência</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNovaOcorrencia">
+                        <div class="mb-3">
+                            <label for="ocorrenciaLocalizacao" class="form-label">Localização <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="ocorrenciaLocalizacao" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="ocorrenciaTipoAssistencia" class="form-label">Tipo de Assistência <span class="text-danger">*</span></label>
+                                <select class="form-select" id="ocorrenciaTipoAssistencia" required>
+                                    <option selected disabled value="">Selecione...</option>
+                                    <option value="Alagamento">Alagamento</option>
+                                    <option value="Deslizamento">Deslizamento</option>
+                                    <option value="Inundação">Inundação</option>
+                                    <option value="Obstrução de Via">Obstrução de Via</option>
+                                    <option value="Falta de Energia">Falta de Energia</option>
+                                    <option value="Risco Estrutural">Risco Estrutural</option>
+                                    <option value="Monitoramento Hídrico">Monitoramento Hídrico</option>
+                                    <option value="Médica">Médica</option>
+                                    <option value="Resgate">Resgate</option>
+                                    <option value="Evacuação">Evacuação</option>
+                                    <option value="Abrigo">Abrigo</option>
+                                    <option value="Comida">Comida</option>
+                                    <option value="Água">Água</option>
+                                    <option value="Segurança">Segurança</option>
+                                    <option value="Trânsito">Trânsito</option>
+                                    <option value="Outro">Outro</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="ocorrenciaStatus" class="form-label">Status <span class="text-danger">*</span></label>
+                                <select class="form-select" id="ocorrenciaStatus" required>
+                                    <option value="Pendente" selected>Pendente</option>
+                                    <option value="Em atendimento">Em atendimento</option>
+                                    <option value="Concluído">Concluído</option>
+                                </select>
+                            </div>
+                        </div>
+                         <div class="mb-3">
+                            <label for="ocorrenciaDataHora" class="form-label">Data/Hora da Ocorrência <span class="text-danger">*</span></label>
+                            <input type="datetime-local" class="form-control" id="ocorrenciaDataHora" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label mb-1">Equipes a Alocar:</label>
+                            <div id="checkboxesEquipesAlocadasContainer" class="border p-2 rounded" style="max-height: 150px; overflow-y: auto;">
+                                <small class="text-muted">Carregando equipes...</small>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ocorrenciaDescricao" class="form-label">Descrição <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="ocorrenciaDescricao" rows="3" required></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Registrar Ocorrência</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalDetalhesOcorrencia" tabindex="-1" aria-labelledby="modalDetalhesOcorrenciaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDetalhesOcorrenciaLabel">Detalhes da Ocorrência</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <dl class="row">
+                        <dt class="col-sm-3">ID da Ocorrência:</dt>
+                        <dd class="col-sm-9" id="detalheOcorrenciaId"></dd>
+                        <dt class="col-sm-3">Localização:</dt>
+                        <dd class="col-sm-9" id="detalheOcorrenciaLocalizacao"></dd>
+                        <dt class="col-sm-3">Status Atual:</dt>
+                        <dd class="col-sm-9"><span id="detalheOcorrenciaStatus" class="badge"></span></dd>
+                        <dt class="col-sm-3">Tipo de Assistência:</dt>
+                        <dd class="col-sm-9" id="detalheOcorrenciaTipoAssistencia"></dd>
+                        <dt class="col-sm-3">Data/Hora Registrada:</dt>
+                        <dd class="col-sm-9" id="detalheOcorrenciaDataHora"></dd>
+                        <dt class="col-sm-3">Equipes Alocadas:</dt>
+                        <dd class="col-sm-9" id="detalheOcorrenciaEquipes"></dd>
+                        <dt class="col-sm-3">Descrição Completa:</dt>
+                        <dd class="col-sm-9">
+                            <p id="detalheOcorrenciaDescricao" style="white-space: pre-wrap; word-wrap: break-word;"></p>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" id="btnEditarOcorrenciaNoModalDetalhes">Editar Ocorrência</button> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/ocorrencia.js"></script>
+</body>
+</html>

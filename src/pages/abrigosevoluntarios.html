@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abrigos e Voluntários</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/abrigoevoluntarios.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    </head>
+<body>
+
+    <div class="container-abrigosevoluntarios">
+        <nav class="navbar navbar-expand-lg border-bottom">
+            <div class="container-fluid">
+                <a class="navbar-brand ms-2" href="#"><img src="../img/logoSimra.svg" width="180" height="45" alt="Logo SIMRA"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav d-flex align-items-center gap-3 fs-5">
+                        <li class="nav-item"><a class="nav-link" href="/src/index.html">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../pages/sensores.html">Sensores</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/src/pages/ocorrencia.html">Ocorrências</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="../pages/abrigosevoluntarios.html">Abrigos e Voluntários</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <button type="button" class="btn btn-secondary btn-md border-0 rounded"><i class="fa-regular fa-bell"></i></button>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <button type="button" class="btn btn-secondary btn-md border-0 rounded-circle"><i class="fa-regular fa-user"></i></button>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="fw-bold">Abrigos e Voluntários</h2>
+                <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#managementOffcanvas" aria-controls="managementOffcanvas">
+                    <i class="fas fa-bars me-2"></i>Painel de Ações
+                </button>
+            </div>
+
+            <h4 class="mb-3">Abrigos Cadastrados</h4>
+            <div class="table-responsive mb-5">
+                <table class="table table-bordered table-hover rounded-3 text-dark">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nome</th>
+                            <th>Endereço</th>
+                            <th>Capacidade</th>
+                            <th>Vagas</th>
+                            <th>Telefone</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sheltersTableBody"></tbody>
+                </table>
+            </div>
+
+            <h4 class="mb-3">Voluntários</h4>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex gap-2">
+                    <div class="dropdown">
+                        <button id="specialtyFilterButton" class="btn btn-light dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Especialidade
+                        </button>
+                        <ul id="specialtyDropdownMenu" class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Todos</a></li>
+                            <li><a class="dropdown-item" href="#">Médico</a></li>
+                            <li><a class="dropdown-item" href="#">Resgate</a></li>
+                            <li><a class="dropdown-item" href="#">Logística</a></li>
+                            <li><a class="dropdown-item" href="#">Communication</a></li>
+                            <li><a class="dropdown-item" href="#">Primeiros Socorros</a></li>
+                            <li><a class="dropdown-item" href="#">Cozinha</a></li>
+                            <li><a class="dropdown-item" href="#">Limpeza</a></li>
+                            <li><a class="dropdown-item" href="#">Apoio Psicológico</a></li>
+                            <li><a class="dropdown-item" href="#">Outra</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown">
+                        <button id="availabilityFilterButton" class="btn btn-light dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Disponibilidade
+                        </button>
+                        <ul id="availabilityDropdownMenu" class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Todos</a></li>
+                            <li><a class="dropdown-item" href="#">Disponível</a></li>
+                            <li><a class="dropdown-item" href="#">Indisponível</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nome</th>
+                            <th>Telefone</th>
+                            <th>Especialidade</th>
+                            <th>Disponibilidade</th>
+                        </tr>
+                    </thead>
+                    <tbody id="volunteersTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div> <div class="offcanvas offcanvas-start" tabindex="-1" id="managementOffcanvas" aria-labelledby="managementOffcanvasLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title" id="managementOffcanvasLabel"><i class="fas fa-cogs me-2"></i>Painel de Ações</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="mb-3">
+                <h6 class="text-muted fw-bold mb-2">AÇÕES EM ABRIGOS</h6>
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-outline-primary text-start" id="btnListarAbrigosOffcanvas">
+                        <i class="fas fa-list-alt fa-fw me-2"></i>Listar Abrigos (Atualizar)
+                    </button>
+                    <button type="button" class="btn btn-success text-start" data-bs-toggle="modal" data-bs-target="#modalNovoAbrigo">
+                        <i class="fas fa-plus fa-fw me-2"></i>Registrar Novo Abrigo
+                    </button>
+                     <button type="button" class="btn btn-outline-danger text-start" id="btnRemoverAbrigoOffcanvas" disabled>
+                        <i class="fas fa-trash-alt fa-fw me-2"></i>Remover Abrigo
+                    </button>
+                </div>
+            </div>
+            <hr>
+            <div class="mb-3">
+                <h6 class="text-muted fw-bold mb-2">GESTÃO DE PESSOAS EM ABRIGOS</h6>
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-outline-primary text-start" id="btnListarPessoasNoAbrigo" disabled>
+                        <i class="fas fa-users fa-fw me-2"></i>Listar Pessoas em Abrigo
+                    </button>
+                    </div>
+            </div>
+            <hr>
+            <div class="mb-3">
+                <h6 class="text-muted fw-bold mb-2">AÇÕES EM VOLUNTÁRIOS</h6>
+                <div class="d-grid gap-2">
+                     <button type="button" class="btn btn-success text-start" id="btnAddVolunteerOffcanvas" data-bs-toggle="modal" data-bs-target="#modalNovoVoluntario">
+                        <i class="fas fa-user-plus fa-fw me-2"></i>Adicionar Voluntário
+                    </button>
+                    <button type="button" class="btn btn-outline-danger text-start" id="btnRemoveVolunteerOffcanvas" disabled>
+                        <i class="fas fa-user-minus fa-fw me-2"></i>Remover Voluntário
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalNovoAbrigo" tabindex="-1" aria-labelledby="modalNovoAbrigoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalNovoAbrigoLabel">Registrar Novo Abrigo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNovoAbrigo">
+                        <div class="mb-3">
+                            <label for="shelterName" class="form-label">Nome do Abrigo <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="shelterName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="shelterAddress" class="form-label">Endereço Completo <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="shelterAddress" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="shelterCapacity" class="form-label">Capacidade Total <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="shelterCapacity" required min="0">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="shelterVacancies" class="form-label">Vagas Disponíveis <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="shelterVacancies" required min="0">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="shelterPhone" class="form-label">Telefone</label>
+                            <input type="tel" class="form-control" id="shelterPhone" placeholder="(XX) XXXXX-XXXX">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Registrar Abrigo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalNovoVoluntario" tabindex="-1" aria-labelledby="modalNovoVoluntarioLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalNovoVoluntarioLabel">Adicionar Novo Voluntário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNovoVoluntario">
+                        <div class="mb-3">
+                            <label for="volunteerName" class="form-label">Nome Completo <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="volunteerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="volunteerPhone" class="form-label">Telefone <span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control" id="volunteerPhone" placeholder="(XX) XXXXX-XXXX" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="volunteerSpecialty" class="form-label">Especialidade <span class="text-danger">*</span></label>
+                            <select class="form-select" id="volunteerSpecialty" required>
+                                <option selected disabled value="">Selecione...</option>
+                                <option value="Médico">Médico</option>
+                                <option value="Resgate">Resgate</option>
+                                <option value="Logística">Logística</option>
+                                <option value="Communication">Comunicação</option>
+                                <option value="Primeiros Socorros">Primeiros Socorros</option>
+                                <option value="Cozinha">Cozinha</option>
+                                <option value="Limpeza">Limpeza</option>
+                                <option value="Apoio Psicológico">Apoio Psicológico</option>
+                                <option value="Outra">Outra</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="volunteerAvailability" class="form-label">Disponibilidade <span class="text-danger">*</span></label>
+                            <select class="form-select" id="volunteerAvailability" required>
+                                <option selected disabled value="">Selecione...</option>
+                                <option value="Disponível">Disponível</option>
+                                <option value="Indisponível">Indisponível</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Adicionar Voluntário</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalListarPessoas" tabindex="-1" aria-labelledby="modalListarPessoasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalListarPessoasLabel">Pessoas no Abrigo: <span id="listarPessoasAbrigoNome"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong id="totalPessoasNoAbrigo"></strong></p>
+                <ul id="listaPessoasAbrigo" class="list-group">
+                    </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSelecionarAbrigoParaListarPessoas" tabindex="-1" aria-labelledby="modalSelecionarAbrigoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSelecionarAbrigoLabel">Selecionar Abrigo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Por favor, selecione o abrigo para ver a lista de pessoas:</p>
+                <select class="form-select" id="selectAbrigoParaListarPessoas">
+                    </select>
+                <div id="semAbrigosParaSelecionar" class="text-danger mt-2" style="display: none;">Nenhum abrigo cadastrado para selecionar.</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnConfirmarSelecaoAbrigoParaListarPessoas">Ver Pessoas</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSelecionarAbrigoParaExcluir" tabindex="-1" aria-labelledby="modalSelecionarAbrigoExcluirLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSelecionarAbrigoExcluirLabel">Selecionar Abrigo para Excluir</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Por favor, selecione o abrigo que deseja excluir:</p>
+                <select class="form-select" id="selectAbrigoParaExcluir">
+                    </select>
+                <div id="semAbrigosParaExcluirMsg" class="text-danger mt-2" style="display: none;">Nenhum abrigo cadastrado para excluir.</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmarExclusaoAbrigo">Excluir Abrigo Selecionado</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSelecionarVoluntarioParaExcluir" tabindex="-1" aria-labelledby="modalSelecionarVoluntarioExcluirLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSelecionarVoluntarioExcluirLabel">Selecionar Voluntário para Excluir</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Por favor, selecione o voluntário que deseja excluir:</p>
+                <select class="form-select" id="selectVoluntarioParaExcluir">
+                    </select>
+                <div id="semVoluntariosParaExcluirMsg" class="text-danger mt-2" style="display: none;">Nenhum voluntário cadastrado para excluir.</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmarExclusaoVoluntario">Excluir Voluntário Selecionado</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
