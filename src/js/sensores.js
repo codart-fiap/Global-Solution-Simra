@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         { id: "Sensor-012", localizacao: "Av. Aricanduva, próximo ao Shopping, Zona Leste", tipo: "Nível da Água", leituraAtual: "0.8m", status: "Inativo", areaDeRisco: "Médio", observacoes: "Sensor de nível do córrego Aricanduva.", historicoLeituras: [], historicoManutencoes: []},
         { id: "Sensor-013", localizacao: "Morro do Macaco, São Mateus - Encosta Urbanizada", tipo: "Chuva", leituraAtual: "18mm/hr", status: "Ativo", areaDeRisco: "Alto", observacoes: "Monitoramento pluviométrico para risco de deslizamento.", historicoLeituras: [], historicoManutencoes: []}, // Tipo alterado
         { id: "Sensor-014", localizacao: "Terminal de Cargas Fernão Dias, Vila Medeiros", tipo: "Chuva", leituraAtual: "3mm/hr", status: "Ativo", areaDeRisco: "Baixo", observacoes: "", historicoLeituras: [], historicoManutencoes: [] },
-        { id: "Sensor-015", localizacao: "Sistema Cantareira - Represa Jaguari (Extremo Norte)", tipo: "Nível da Água", leituraAtual: "45% capacidade", status: "Ativo", areaDeRisco: "Crítico", observacoes: "Nível crítico para o abastecimento da RMSP.", historicoLeituras: [], historicoManutencoes: [] }
+        { id: "Sensor-015", localizacao: "Sistema Cantareira - Represa Jaguari (Extremo Norte)", tipo: "Nível da Água", leituraAtual: "95% capacidade", status: "Ativo", areaDeRisco: "Crítico", observacoes: "Nível crítico para o abastecimento da RMSP.", historicoLeituras: [], historicoManutencoes: [] }
     ];
 
     function formatDisplayDateTime(isoOrDateTimeString) {
