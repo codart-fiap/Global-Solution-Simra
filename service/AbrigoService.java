@@ -235,7 +235,7 @@ public class AbrigoService {
         }
     }
 
-    public removerVoluntarioDeAbrigo(int voluntarioId) {
+    public boolean removerVoluntarioDeAbrigo(int voluntarioId) {
         return removerDeAbrigoGenerico(
         voluntarioId,
         voluntarios,
