@@ -2,24 +2,31 @@ package simra.service;
 
 import simra.model.Abrigo;
 import simra.model.PessoaAbrigada;
+import simra.model.Voluntario;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class AbrigoService {
     private List<Abrigo> abrigos;
     private List<PessoaAbrigada> pessoasAbrigadas;
+    private List<Voluntario> voluntarios;
     private int nextAbrigoId;
     private int nextPessoaAbrigadaId;
+    private int nextVoluntarioId;
 
     public AbrigoService() {
         this.abrigos = new ArrayList<>();
         this.pessoasAbrigadas = new ArrayList<>();
+        this.voluntarios = new ArrayList<>();
         this.nextAbrigoId = 301;
         this.nextPessoaAbrigadaId = 501;
+        this.nextVoluntarioId = 401;
 
         // Dados de exemplo
         cadastrarAbrigo("Ginásio Municipal", "Praça Cívica, s/n", 200);
@@ -29,6 +36,10 @@ public class AbrigoService {
         registrarPessoaEmAbrigo(1, "Maria Souza", 35, "Feminino", abrigos.get(0));
         registrarPessoaEmAbrigo(2, "João Pereira", 10, "Masculino", abrigos.get(0));
         registrarPessoaEmAbrigo(3, "Carlos Silva", 50, "Masculino", abrigos.get(1));
+
+        // Registra Voluntários de exemplo no abrigo
+        registrarVoluntario(1, "João Cunha", "14 98871111", "médico", true, abrigos.get(0));
+        registrarVoluntario(1, "Marcelo Santos", "14 98842222", "enfermeiro", true, abrigos.get(1));
     }
 
     // --- CRUD Abrigo ---
@@ -117,14 +128,28 @@ public class AbrigoService {
      * @return A PessoaAbrigada recém-criada, ou null se o abrigo estiver lotado.
      */
     public PessoaAbrigada registrarPessoaEmAbrigo(int id, String nome, int idade, String genero, Abrigo abrigo) {
+        return registrarEmAbrigo(
+            abrigo,
+            pessoasAbrigadas,
+            () -> new PessoaAbrigada(nextPessoaAbrigadaId++, nome, idade, genero, abrigo, LocalDate.now()),
+            "Pessoa '" + nome + "'"
+        );   
+    }
+
+    private <T> T registrarEmAbrigo(
+        Abrigo abrigo,
+        List<T> lista,
+        Supplier<T> criador,
+        String nome
+    ) {
         if (abrigo.getVagasDisponiveis() > 0) {
-            PessoaAbrigada novaPessoa = new PessoaAbrigada(nextPessoaAbrigadaId++, nome, idade, genero, abrigo, LocalDate.now());
-            this.pessoasAbrigadas.add(novaPessoa);
+            T novo = criador.get();
+            lista.add(novo);
             abrigo.setVagasDisponiveis(abrigo.getVagasDisponiveis() - 1);
-            System.out.println("Pessoa '" + nome + "' registrada no abrigo '" + abrigo.getNome() + "'. Vagas restantes: " + abrigo.getVagasDisponiveis());
-            return novaPessoa;
+            System.out.println(nome + " registrado(a) no abrigo '" + abrigo.getNome() + "'. Vagas restantes: " + abrigo.getVagasDisponiveis());
+            return novo;
         } else {
-            System.out.println("Abrigo '" + abrigo.getNome() + "' está lotado. Não é possível registrar '" + nome + "'.");
+            System.out.println("Abrigo '" + abrigo.getNome() + "' está lotado. Não é possível registrar " + nome + ".");
             return null;
         }
     }
@@ -147,20 +172,78 @@ public class AbrigoService {
      * @return true se a pessoa foi removida, false caso contrário.
      */
     public boolean removerPessoaDeAbrigo(int pessoaId) {
-        Optional<PessoaAbrigada> optPessoa = pessoasAbrigadas.stream()
-                .filter(p -> p.getId() == pessoaId)
+        return removerDeAbrigoGenerico(
+        pessoaId,
+        pessoasAbrigadas,
+        PessoaAbrigada::getId,
+        PessoaAbrigada::getAbrigo,
+        PessoaAbrigada::getNome,
+        "Pessoa abrigada"
+        );
+    }
+
+    private <T> boolean removerDeAbrigoGenerico(
+        int id,
+        List<T> lista,
+        Function<T, Integer> getId,
+        Function<T, Abrigo> getAbrigo,
+        Function<T, String> getNome,
+        String tipo
+    ) {
+        Optional<T> opt = lista.stream()
+                .filter(obj -> getId.apply(obj) == id)
                 .findFirst();
-        if (optPessoa.isPresent()) {
-            PessoaAbrigada pessoa = optPessoa.get();
-            if (pessoa.getAbrigo() != null) {
-                pessoa.getAbrigo().setVagasDisponiveis(pessoa.getAbrigo().getVagasDisponiveis() + 1); // Libera vaga
+        if (opt.isPresent()) {
+            T obj = opt.get();
+            Abrigo abrigo = getAbrigo.apply(obj);
+            if (abrigo != null) {
+                abrigo.setVagasDisponiveis(abrigo.getVagasDisponiveis() + 1);
             }
-            pessoasAbrigadas.remove(pessoa);
-            System.out.println("Pessoa ID " + pessoaId + " (" + pessoa.getNome() + ") removida do abrigo. Vaga liberada.");
+            lista.remove(obj);
+            System.out.println(tipo + " ID " + id + " (" + getNome.apply(obj) + ") removido do abrigo. Vaga liberada.");
             return true;
         }
-        System.out.println("Pessoa abrigada ID " + pessoaId + " não encontrada.");
-        return false;
+    System.out.println(tipo + " ID " + id + " não encontrado.");
+    return false;
+    }
+
+    // --- CRUD Voluntário ---
+
+    public Voluntario registrarVoluntario(int id, String nome, String telefone, String especialidade, boolean disponivel, Abrigo abrigo) {
+        return registrarEmAbrigo(
+            abrigo,
+            voluntarios,
+            () -> new Voluntario(nextVoluntarioId++, nome, telefone, especialidade, disponivel, abrigo),
+            "Voluntário '" + nome + "'"
+        );
+    }
+
+    public void listarVoluntarios(boolean apenasDisponiveis) {
+        List<Voluntario> listaParaMostrar = apenasDisponiveis
+            ? voluntarios.stream().filter(Voluntario::isDisponivel).toList()
+            : voluntarios;
+
+        if (listaParaMostrar.isEmpty()) {
+            System.out.println(apenasDisponiveis
+                ? "Nenhum voluntário disponível no momento."
+                : "Nenhum voluntário registrado.");
+        } else {
+            System.out.println(apenasDisponiveis
+                ? "--- VOLUNTÁRIOS DISPONÍVEIS ---"
+                : "--- TODOS OS VOLUNTÁRIOS ---");
+            listaParaMostrar.forEach(System.out::println);
+        }
+    }
+
+    public removerVoluntarioDeAbrigo(int voluntarioId) {
+        return removerDeAbrigoGenerico(
+        voluntarioId,
+        voluntarios,
+        Voluntario::getId,
+        Voluntario::getAbrigo,
+        Voluntario::getNome,
+        "Voluntário"
+        );
     }
 
     // Métodos para obter as listas (útil para dashboard ou outras classes)
@@ -170,5 +253,9 @@ public class AbrigoService {
 
     public List<PessoaAbrigada> getPessoasAbrigadas() {
         return new ArrayList<>(pessoasAbrigadas);
+    }
+
+    public List<Voluntario> getVoluntarios() {
+        return new ArrayList<>(voluntarios);
     }
 }

@@ -6,13 +6,16 @@ public class Voluntario {
     private String telefone;
     private String especialidade; // Ex: Médico, Resgate, Logística
     private boolean disponivel;
+    private Abrigo abrigo;
 
-    public Voluntario(int id, String nome, String telefone, String especialidade, boolean disponivel) {
+    public Voluntario(int id, String nome, String telefone, String especialidade, boolean disponivel, Abrigo abrigo) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.especialidade = especialidade;
         this.disponivel = disponivel;
+        this.abrigo =  abrigo;
+
     }
 
     // Getters
@@ -36,6 +39,10 @@ public class Voluntario {
         return disponivel;
     }
 
+    public Abrigo getAbrigo() {
+        return abrigo;
+    }
+
     // Setters
     public void setNome(String nome) {
         this.nome = nome;
@@ -51,6 +58,10 @@ public class Voluntario {
 
     public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
+    }
+
+    public void setAbrigo(Abrigo abrigo) {
+        this.abrigo = abrigo;
     }
 
     @Override
