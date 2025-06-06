@@ -123,29 +123,25 @@ public class Simra_App {
         int opcaoAbrigo;
         do {
             System.out.println("\n--- GERENCIAR ABRIGOS ---");
-            System.out.println("2. Cadastrar Novo Abrigo");
-            System.out.println("1. Listar Abrigos");
-            System.out.println("5. Atualizar Abrigo");
-            System.out.println("6. Remover Abrigo");
-
-            System.out.println("3. Registrar Pessoa em Abrigo");
-            System.out.println("4. Listar Pessoas Abrigadas");
+            System.out.println("1. Cadastrar Novo Abrigo");
+            System.out.println("2. Listar Abrigos");
+            System.out.println("3. Atualizar Abrigo");
+            System.out.println("4. Remover Abrigo");
+            System.out.println("\n--- GERENCIAR PESSOAS ABRIGADAS ---");
+            System.out.println("5. Registrar Pessoa em Abrigo");
+            System.out.println("6. Listar Pessoas Abrigadas");
             System.out.println("7. Remover Pessoa de Abrigo");
-
-
+            System.out.println("\n--- GERENCIAR VOLUNTÁRIOS ---");
             System.out.println("8. Registrar Voluntário em Abrigo");
             System.out.println("9. Listar Voluntários disponiveis ou não");
             System.out.println("10. Remover Voluntário de Abrigo");
-
+            System.out.println("\n--- SAIR ---");
             System.out.println("0. Voltar ao Menu Principal");
             System.out.print("Escolha uma opção: ");
             opcaoAbrigo = lerInteiro();
 
             switch (opcaoAbrigo) {
                 case 1:
-                    abrigoService.listarAbrigos();
-                    break;
-                case 2:
                     System.out.print("Nome do novo abrigo: ");
                     String nomeAbrigo = scanner.nextLine();
                     System.out.print("Endereço do abrigo: ");
@@ -154,7 +150,31 @@ public class Simra_App {
                     int capacidadeAbrigo = lerInteiro();
                     abrigoService.cadastrarAbrigo(nomeAbrigo, enderecoAbrigo, capacidadeAbrigo);
                     break;
+                case 2:
+                    abrigoService.listarAbrigos();
+                    break;
                 case 3:
+                    System.out.print("ID do abrigo para atualizar: ");
+                    int idAtualizarAbrigo = lerInteiro();
+                    Optional<Abrigo> abrigoParaAtualizar = abrigoService.buscarAbrigoPorId(idAtualizarAbrigo);
+                    if (abrigoParaAtualizar.isPresent()) {
+                        System.out.print("Novo nome (" + abrigoParaAtualizar.get().getNome() + "): ");
+                        String novoNome = scanner.nextLine();
+                        System.out.print("Novo endereço (" + abrigoParaAtualizar.get().getEndereco() + "): ");
+                        String novoEndereco = scanner.nextLine();
+                        System.out.print("Novo telefone (" + abrigoParaAtualizar.get().getTelefone() + "): ");
+                        String novoTelefone = scanner.nextLine();
+                        abrigoService.atualizarAbrigo(idAtualizarAbrigo, novoNome, novoEndereco, novoTelefone);
+                    } else {
+                        System.out.println("Abrigo não encontrado.");
+                    }
+                    break;
+                case 4:
+                    System.out.print("ID do abrigo para remover: ");
+                    int idRemoverAbrigo = lerInteiro();
+                    abrigoService.removerAbrigo(idRemoverAbrigo);
+                    break;
+                case 5:
                     abrigoService.listarAbrigos();
                     if (abrigoService.getAbrigos().isEmpty()) {
                         System.out.println("Nenhum abrigo disponível para registrar pessoas.");
@@ -176,29 +196,8 @@ public class Simra_App {
                         System.out.println("Abrigo não encontrado.");
                     }
                     break;
-                case 4:
-                    abrigoService.listarPessoasAbrigadas();
-                    break;
-                case 5:
-                    System.out.print("ID do abrigo para atualizar: ");
-                    int idAtualizarAbrigo = lerInteiro();
-                    Optional<Abrigo> abrigoParaAtualizar = abrigoService.buscarAbrigoPorId(idAtualizarAbrigo);
-                    if (abrigoParaAtualizar.isPresent()) {
-                        System.out.print("Novo nome (" + abrigoParaAtualizar.get().getNome() + "): ");
-                        String novoNome = scanner.nextLine();
-                        System.out.print("Novo endereço (" + abrigoParaAtualizar.get().getEndereco() + "): ");
-                        String novoEndereco = scanner.nextLine();
-                        System.out.print("Novo telefone (" + abrigoParaAtualizar.get().getTelefone() + "): ");
-                        String novoTelefone = scanner.nextLine();
-                        abrigoService.atualizarAbrigo(idAtualizarAbrigo, novoNome, novoEndereco, novoTelefone);
-                    } else {
-                        System.out.println("Abrigo não encontrado.");
-                    }
-                    break;
                 case 6:
-                    System.out.print("ID do abrigo para remover: ");
-                    int idRemoverAbrigo = lerInteiro();
-                    abrigoService.removerAbrigo(idRemoverAbrigo);
+                    abrigoService.listarPessoasAbrigadas();
                     break;
                 case 7:
                     System.out.print("ID da pessoa abrigada para remover: ");
@@ -226,7 +225,7 @@ public class Simra_App {
                         System.out.print("especialidade: ");
                         String especialidadeVoluntario = scanner.nextLine();
 
-                        System.out.print("disponível: ");
+                        System.out.print("disponível (true/false): ");
                         boolean disponivelVoluntario = scanner.nextBoolean();
 
                         abrigoService.registrarVoluntario(
