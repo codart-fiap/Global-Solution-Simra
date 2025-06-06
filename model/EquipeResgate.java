@@ -5,13 +5,15 @@ public class EquipeResgate {
     private String contato;
     private int capacidadePessoas;
     private boolean disponivel;
+    private int idAreaResgate;
 
-    public EquipeResgate(int id, String nome, String contato, int capacidadePessoas, boolean disponivel) {
+    public EquipeResgate(int id, String nome, String contato, int capacidadePessoas, boolean disponivel, int idAreaResgate) {
         this.id = id;
         this.nome = nome;
         this.contato = contato;
         this.capacidadePessoas = capacidadePessoas;
         this.disponivel = disponivel;
+        this.idAreaResgate = idAreaResgate;
     }
 
     // Getters
@@ -35,6 +37,10 @@ public class EquipeResgate {
         return disponivel;
     }
 
+    public int getIdAreaResgate() {
+        return idAreaResgate;
+    }
+
     // Setters
     public void setNome(String nome) {
         this.nome = nome;
@@ -52,12 +58,17 @@ public class EquipeResgate {
         this.disponivel = disponivel;
     }
 
+    public void setIdAreaResgate(int idAreaResgate) {
+        this.idAreaResgate = idAreaResgate;
+    }
+
     @Override
     public String toString() {
         return "ID: " + id +
                 " | Nome: " + nome +
                 " | Contato: " + contato +
                 " | Capacidade: " + capacidadePessoas +
-                " | Disponível: " + (disponivel ? "Sim" : "Não");
+                " | Disponível: " + (disponivel ? "Sim" : "Não") +
+                " | ID Área de Resgate: " + idAreaResgate;
     }
 }

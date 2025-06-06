@@ -6,6 +6,7 @@ import simra.model.OcorrenciaAlagamento;
 import simra.model.Sensor;
 import simra.service.AbrigoService;
 import simra.service.OcorrenciaService;
+import simra.service.EquipeResgateService;
 import simra.service.SensorService;
 
 import java.util.InputMismatchException;
@@ -17,6 +18,7 @@ public class Simra_App {
     private static SensorService sensorService = new SensorService();
     private static OcorrenciaService ocorrenciaService = new OcorrenciaService();
     private static AbrigoService abrigoService = new AbrigoService();
+    private static EquipeResgateService equipeResgateService = new EquipeResgateService();
 
     public static void main(String[] args) {
         System.out.println("Bem-vindo ao SIMRA - Sistema Integrado de Monitoramento e Resposta a Alagamentos!");
@@ -45,6 +47,9 @@ public class Simra_App {
                 case 6: // NOVO CASE AQUI
                     menuGerenciarOcorrencias();
                     break;
+                case 7:
+                    menuGerenciarEquipesDeResgate();
+                    break;
                 case 0:
                     System.out.println("Saindo do SIMRA. Até mais!");
                     break;
@@ -64,6 +69,7 @@ public class Simra_App {
         System.out.println("4. Gerenciar Abrigos, Pessoas Abrigadas e Voluntários");
         System.out.println("5. Gerenciar Áreas de Risco");
         System.out.println("6. Gerenciar Ocorrências"); // NOVA OPÇÃO AQUI
+        System.out.println("7. Gerenciar Equipes de Resgate");
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -358,6 +364,53 @@ public class Simra_App {
             }
         } while (opcaoOcorrencia != 0);
 
+    }
+
+    private static void menuGerenciarEquipesDeResgate() {
+         int opcaoEquipes;
+        do {
+            System.out.println("\n--- GERENCIAR EQUIPES ---");
+            System.out.println("1. Adicionar Equipe de Resgate");
+            System.out.println("2. Listar Equipes de Resgate");
+            System.out.println("3. Remover Equipes de Resgate");
+            System.out.println("0. Voltar ao Menu Principal");
+            System.out.print("Escolha uma opção: ");
+            opcaoEquipes = lerInteiro();
+
+            switch (opcaoEquipes) {
+                case 1:
+                    System.out.print("Nome da Equipe: ");
+                    String nomeEquipe = scanner.nextLine();
+
+                    System.out.print("Contato: ");
+                    String contatoEquipe = scanner.nextLine();
+
+                    System.out.print("Número de Membros: ");
+                    int numeroMembros = lerInteiro();
+
+                    System.out.print("Disponivel: ");
+                    boolean disponivel = scanner.nextBoolean();
+                    
+                    sensorService.listarAreasDeRisco();
+                    System.out.print("ID da Área de Resgate: ");
+                    int idAreaResgate = lerInteiro();
+
+                    equipeResgateService.cadastrarEquipe(nomeEquipe, contatoEquipe, numeroMembros, disponivel, idAreaResgate);
+                    break;
+                case 2:
+                    equipeResgateService.listarEquipes();
+                    break;
+                case 3:
+                    System.out.print("Digite o ID da equipe para excluir: ");
+                    int idExcluir = lerInteiro();
+                    equipeResgateService.removerEquipe(idExcluir);
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+            }
+        } while (opcaoEquipes != 0);
     }
 
     // Métodos auxiliares para leitura de entrada (com tratamento de erro básico)
