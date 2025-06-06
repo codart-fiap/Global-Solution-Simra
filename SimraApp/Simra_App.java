@@ -61,7 +61,7 @@ public class Simra_App {
         System.out.println("1. Dashboard de Monitoramento (Sensores e Alertas)");
         System.out.println("2. Simular Leitura de Sensor (e verificar Alertas)");
         System.out.println("3. Registrar Nova Ocorrência");
-        System.out.println("4. Gerenciar Abrigos e Pessoas Abrigadas");
+        System.out.println("4. Gerenciar Abrigos, Pessoas Abrigadas e Voluntários");
         System.out.println("5. Gerenciar Áreas de Risco");
         System.out.println("6. Gerenciar Ocorrências"); // NOVA OPÇÃO AQUI
         System.out.println("0. Sair");
@@ -123,13 +123,20 @@ public class Simra_App {
         int opcaoAbrigo;
         do {
             System.out.println("\n--- GERENCIAR ABRIGOS ---");
-            System.out.println("1. Listar Abrigos");
             System.out.println("2. Cadastrar Novo Abrigo");
-            System.out.println("3. Registrar Pessoa em Abrigo");
-            System.out.println("4. Listar Pessoas Abrigadas");
+            System.out.println("1. Listar Abrigos");
             System.out.println("5. Atualizar Abrigo");
             System.out.println("6. Remover Abrigo");
+
+            System.out.println("3. Registrar Pessoa em Abrigo");
+            System.out.println("4. Listar Pessoas Abrigadas");
             System.out.println("7. Remover Pessoa de Abrigo");
+
+
+            System.out.println("8. Registrar Voluntário em Abrigo");
+            System.out.println("9. Listar Voluntários disponiveis ou não");
+            System.out.println("10. Remover Voluntário de Abrigo");
+
             System.out.println("0. Voltar ao Menu Principal");
             System.out.print("Escolha uma opção: ");
             opcaoAbrigo = lerInteiro();
@@ -197,6 +204,52 @@ public class Simra_App {
                     System.out.print("ID da pessoa abrigada para remover: ");
                     int idRemoverPessoa = lerInteiro();
                     abrigoService.removerPessoaDeAbrigo(idRemoverPessoa);
+                    break;
+                case 8:
+                    abrigoService.listarAbrigos();
+                    if (abrigoService.getAbrigos().isEmpty()) {
+                        System.out.println("Nenhum abrigo disponível para registrar pessoas.");
+                        break;
+                    }
+                    System.out.print("ID do abrigo para registrar Voluntario: ");
+                    int idVoluntario = lerInteiro();
+                    Optional<Abrigo> optAbrigoVoluntario = abrigoService.buscarAbrigoPorId(idVoluntario);
+                    if (optAbrigoVoluntario.isPresent()) {
+                        Abrigo abrigoSelecionado = optAbrigoVoluntario.get();
+                        
+                        System.out.print("Nome do Voluntario: ");
+                        String nomeVoluntario = scanner.nextLine();
+                        
+                        System.out.print("Telefone: ");
+                        String telefoneVoluntario = scanner.nextLine();
+
+                        System.out.print("especialidade: ");
+                        String especialidadeVoluntario = scanner.nextLine();
+
+                        System.out.print("disponível: ");
+                        boolean disponivelVoluntario = scanner.nextBoolean();
+
+                        abrigoService.registrarVoluntario(
+                            abrigoService.getVoluntarios().size() + 1,
+                            nomeVoluntario,
+                            telefoneVoluntario,
+                            especialidadeVoluntario,
+                            disponivelVoluntario ,
+                            abrigoSelecionado
+                            ); // ID simples
+                    } else {
+                        System.out.println("Abrigo não encontrado.");
+                    }
+                    break;
+                case 9:
+                    System.out.print("verificar somente voluntários disponíveis (true/false)?");
+                    boolean apenasDisponiveis = scanner.nextBoolean();
+                    abrigoService.listarVoluntarios(apenasDisponiveis);
+                    break;
+                case 10:
+                    System.out.print("ID do voluntário abrigado para remover: ");
+                    int idRemoverVoluntario = lerInteiro();
+                    abrigoService.removerVoluntarioDeAbrigo(idRemoverVoluntario);
                     break;
                 case 0:
                     break;
